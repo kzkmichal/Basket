@@ -1,5 +1,5 @@
 // @ts-nocheck
-export const products = [{
+export const productList = [{
     title: 'Album 1',
     image: 'src/assets/Album 1.png',
     price: 12.99,

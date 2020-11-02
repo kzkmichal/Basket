@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-export const renderProducts = (products) => {
+export const displayProducts = (products) => {
   products.forEach(product => {
     const {
       title,
@@ -10,19 +8,19 @@ export const renderProducts = (products) => {
     } = product
 
     const items = document.querySelector('.shop-items')
-    items.insertAdjacentHTML('beforeend', renderProduct(title, image, price, id))
+    items.insertAdjacentHTML('beforeend', render(title, image, price, id))
   });
 }
 
 
-const renderProduct = (title, image, price, id) => {
+const render = (title, image, price, id) => {
   const markup = `
   <div class="shop-item">
     <span class="shop-item-title">${title}</span>
     <img class="shop-item-image" src="${image}">
     <div class="shop-item-details">
     <span class="shop-item-price">$${price}</span>
-    <button id="${id}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+    <button data-id="${id}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
   </div>
   `
 

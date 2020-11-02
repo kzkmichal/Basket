@@ -1,70 +1,78 @@
 // @ts-nocheck
-import {
-  ShopItem
-} from './Item.js';
-// import {
-//   Basket
-// } from './Basket.js'
-
-import {
-  Basket
-} from './logic/basket.js'
-
 // @ts-ignore
 import {
-  products
-} from './products/products.js';
+  productList
+} from './products/productList.js';
 import {
-  renderProducts
-} from './products/renderProducts.js';
+  Products
+} from './model/Products.js';
 import {
-  ViewBasket
-} from './render/viewBasket.js'
+  displayProducts
+} from './UI/viewProducts.js';
+import {
+  displayItem,
+  remove
+} from './UI/viewItem.js'
 
-import {
-  Calculations
-} from './logic/calculations.js'
 
 class Main {
-  constructor() {}
+  constructor() {
+    this.cart = [];
+    this.buttonsDom = []
+
+  }
 
   init() {
-    renderProducts(products)
-    this.selectProduct()
-    this.basket = new Basket([])
-    this.calculations = new Calculations(this.basket)
-    // this.calculatePrices()
-    // this.showItem()
-
+    this.manageProducts()
+    this.getButtons()
   };
 
-  selectProduct() {
-    this.buttons = document.querySelectorAll('.shop-item-button');
-    this.buttons.forEach(button => button.addEventListener('click', () => {
-      this.createItem(button)
-    }))
+  manageProducts() {
+    this.products = new Products()
+    const products = this.products.getProducts(productList)
+    displayProducts(products)
   }
-  createItem(button) {
-    const item = button.parentElement.parentElement
-    this.item = new ShopItem(item)
-    this.basket.addItem(this.item.render())
-    this.showItem()
-    this.calculatePrices()
-  };
 
-  showItem() {
-    const itmes = this.basket.render()
-    itmes.forEach(item => {
-      this.viewBasket = new ViewBasket(item);
-      this.viewBasket.init()
+  getButtons() {
+    this.buttons = [...document.querySelectorAll('.shop-item-button')];
+    if (this.buttons) {
+      this.buttons.forEach(button => button.addEventListener('click', (e) => {
+        this.buttonsDom.push(button)
+        e.target.innerText = 'IN CARD';
+        e.target.style.backgroundColor = `red`;
+        e.target.disabled = true;
+        let id = button.dataset.id
+        this.manageItems(id)
+      }))
+    }
+  }
+
+  manageItems(id) {
+    const cartItem = {
+      ...this.products.getProduct(id),
+      amount: 1
+    };
+    this.cart.push(cartItem)
+    displayItem(cartItem)
+    this.cartLogic()
+  }
+
+  cartLogic() {
+    const cartItems = document.querySelector('.cart-items')
+    cartItems.addEventListener('click', e => {
+      const target = e.target.closest('.btn');
+      const id = target.dataset.id
+      const targetElement = target.classList.contains('cart-item')
+      console.log(targetElement)
+      this.removeItem(id, targetElement)
     })
+  }
+  removeItem(id, target) {
+    this.cart = this.cart.filter(item => item.id !== id)
 
+    remove(target)
   }
 
-  calculatePrices() {
-    this.calculations.sum()
-
-  }
 
 }
 const main = new Main()
