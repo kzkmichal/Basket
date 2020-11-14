@@ -22,9 +22,26 @@ const renderProduct = (title, image, price, id) => {
     <img class="shop-item-image" src="${image}">
     <div class="shop-item-details">
     <span class="shop-item-price">$${price}</span>
-    <button id="${id}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+    <button data-id="${id}" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
   </div>
   `
 
   return markup
+}
+
+
+export const renderButtons = (id) => {
+  const buttons = [...document.querySelectorAll('.shop-item-button')];
+  const button = buttons.find(item => item.dataset.id === id);
+  renderButton(button)
+}
+
+export const renderButton = (button) => {
+  if (button.disabled) {
+    button.innerHTML = 'ADD TO CARD';
+    button.disabled = false;
+  } else {
+    button.innerHTML = 'IN CARD';
+    button.disabled = true;
+  }
 }

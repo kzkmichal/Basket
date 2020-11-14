@@ -1,63 +1,35 @@
 // @ts-nocheck
-export class ViewBasket {
-  constructor(item) {
-    this.item = item
-  }
+export const renderItems = (items) => {
+  const cart = document.querySelector('.cart-items');
+  cart.innerHTML = ''
 
-
-  init() {
-    this.createItem()
-    this.renderValue()
-  }
-
-  createItem() {
-    const cartRow = document.createElement('div');
-    this.cartRow = cartRow;
-    this.cartRow.classList.add('cart-row')
-    const cartItems = document.querySelector('.cart-items')
-    this.cartItems = cartItems;
-    this.cartRow.innerHTML = this.renderHTML();
-    this.cartItems.appendChild(this.cartRow);
-
-  }
-
-
-  renderHTML() {
+  items.forEach(item => {
     const {
       title,
+      image,
       price,
-      image
-    } = this.item;
+      id,
+      amount
+    } = item
 
-    const content = `
-      <div class="cart-item cart-column">
-          <img class="cart-item-image" src="${image}" width="100" height="100">
-          <span class="cart-item-title">${title}</span>
-      </div>
-      <span class="cart-price cart-column">${price}</span>
-      <div class="cart-quantity cart-column">
-          <input class="cart-quantity-input" type="number" value="1">
-          <button class="btn btn-danger" type="button">REMOVE</button>
-      </div>
-`
-    return content;
+    cart.insertAdjacentHTML('beforeend', renderProduct(title, image, price, id, amount))
+  });
+}
 
-  }
+const renderProduct = (title, image, price, id, amount) => {
+  const markup = `
+  <div class="cart-row">
+    <div class="cart-item cart-column">
+    <img class="cart-item-image" src="${image}" width="100" height="100">
+    <span class="cart-item-title">${title}</span>
+    </div>
+    <span class="cart-price cart-column">${price}</span>
+    <div class="cart-quantity cart-column">
+    <input data-id="${id}" class="cart-quantity-input" type="number" value="${amount}">
+    <button data-id="${id}" class="btn btn-danger remove-cart-item" type="button">REMOVE</button>
+    </div>
+  </div>
+  `
 
-  renderValue() {
-    const itemsPrice = this.cartItems.querySelectorAll('.cart-row');
-    itemsPrice.forEach(item => {
-      const quantity = item.querySelector('.cart-quantity-input')
-      this.productQuantity = quantity;
-      this.productQuantity.addEventListener('change', (e) => {
-        let input = e.target
-        if (input.value <= 0) {
-          input.value = 1
-        } else {
-
-        }
-      })
-    })
-
-  }
+  return markup
 }
