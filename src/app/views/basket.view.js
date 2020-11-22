@@ -33,3 +33,21 @@ const renderProduct = (title, image, price, id, amount) => {
 
   return markup
 }
+
+export const addRemoveEvent = (callback) => {
+  const removeButton = document.querySelectorAll('.remove-cart-item')
+  removeButton.forEach(btn => btn.addEventListener('click', e => callback(e.target.dataset.id)))
+}
+export const addChangeQuantityEvent = (callback) => {
+  const inputs = document.querySelectorAll('.cart-quantity-input');
+  inputs.forEach(input => input.addEventListener('click', e => {
+    const id = e.target.dataset.id;
+    let value;
+    if (e.target.value >= 1) {
+      value = e.target.value;
+    } else {
+      value = 1;
+    }
+    callback(id, value)
+  }))
+}

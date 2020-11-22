@@ -35,13 +35,3 @@ export const renderButtons = (id) => {
   const button = buttons.find(item => item.dataset.id === id);
   renderButton(button)
 }
-
-export const renderButton = (button) => {
-  if (button.disabled) {
-    button.innerHTML = 'ADD TO CARD';
-    button.disabled = false;
-  } else {
-    button.innerHTML = 'IN CARD';
-    button.disabled = true;
-  }
-}

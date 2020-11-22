@@ -6,11 +6,10 @@ class Basket {
     this._data.push(item);
   }
   remove(item) {
-    const data = this._data.filter(product =>
-      item.id !== product.id
+    const indexToRemove = this._data.findIndex(product =>
+      product.id === item.id
     );
-    this._data.splice(0, this._data.length, ...data)
-
+    this._data.splice(indexToRemove, 1)
   }
   removeAll() {
     this._data.length = 0
@@ -19,15 +18,7 @@ class Basket {
     return this._data;
   }
   getSum() {
-    let arr = []
-    this._data.map(item => {
-      const price = item.price * item.amount
-      arr.push(price)
-      // price.reduce((cur, prev) => cur + prev, 0)
-    })
-    const reducer = (prev, cur) => prev + cur
-    const sum = arr.reduce(reducer, 0);
-    return sum
+    return this._data.reduce((acc, prev) => acc + (prev.price * prev.amount), 0)
   }
   getQuantity(id, value) {
     const item = this._data.find(item => item.id === id);
