@@ -1,9 +1,14 @@
 // @ts-nocheck
 // @ts-ignore
+
 //model
 import
 instanceBasket
 from "../models/basket.model.js"
+import {
+  // getProducts,
+  instanceProduct
+} from '../models/products.model.js'
 // views
 import {
   ButtonsView
@@ -17,17 +22,19 @@ import {
   addChangeQuantityEvent
 } from '../views/basket.view.js'
 // products
-import {
-  products
-} from '../data-base/products-db.js'
+// import {
+//   products
+// } from '../data-base/products-db.js'
 import {
   Calculations
 } from '../models/calculations.js'
 
 class Main {
-  init() {
+  async init() {
+    await instanceProduct.getProducts()
+    // await getProducts(renderProducts)
+    renderProducts(instanceProduct.result)
     this.cart = document.querySelector('.cart-items');
-    renderProducts(products)
     const addToBasketHandler = (id) => this.createItem(id)
     const removeItemHandler = () => {
       this.cart.innerHTML = "";
@@ -47,18 +54,38 @@ class Main {
 
   createItem(id) {
     const item = {
-      ...products.find(e => e.id === id),
+      ...instanceProduct.result.find(e => e.id === id),
       amount: 1
     }
     instanceBasket.add(item);
     this.showItems();
+
+
+    //todo  do weryfikacji
+    // const findItem = (items) => {
+    //   const item = {
+    //     ...items.find(e => e.id === id),
+    //     amount: 1
+    //   }
+    //   instanceBasket.add(item);
+    //   this.showItems();
+    // }
+    // getProducts(findItem)
   };
 
   removeItem(id) {
-    const item = products.find(e => e.id === id)
+    const item = instanceProduct.result.find(e => e.id === id);
     instanceBasket.remove(item);
+    this.showItems();
+
+    //todo do weryfikacji
+    // const findItem = (items) => {
+    //   const item = items.find(e => e.id === id);
+    //   instanceBasket.remove(item);
+    //   this.showItems();
+    // }
+    // getProducts(findItem)
     this.buttonsView.renderItemButtons(id)
-    this.showItems()
     Calculations.view(instanceBasket.getSum());
   }
 

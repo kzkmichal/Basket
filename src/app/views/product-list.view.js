@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 export const renderProducts = (products) => {
   products.forEach(product => {
     const {

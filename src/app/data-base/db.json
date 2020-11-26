@@ -1,0 +1,39 @@
+{
+  "products": [{
+      "title": "Album 1",
+      "image": "src/assets/Album 1.png",
+      "price": 12.99,
+      "id": "w29xubf7p"
+    },
+    {
+      "title": "Album 2",
+      "image": "src/assets/Album 2.png",
+      "price": 14.99,
+      "id": "20pxt8fvq"
+    },
+    {
+      "title": "Album 3",
+      "image": "src/assets/Album 3.png",
+      "price": 9.99,
+      "id": "c7j7fbzmc"
+    },
+    {
+      "title": "Album 4",
+      "image": "src/assets/Album 3.png",
+      "price": 19.99,
+      "id": "997ha1p6w"
+    },
+    {
+      "title": "T-Shirt",
+      "image": "src/assets/Shirt.png",
+      "price": 19.99,
+      "id": "vpstt0tj1"
+    },
+    {
+      "title": "Coffee Cup",
+      "image": "src/assets/Cofee.png",
+      "price": 19.99,
+      "id": "s67vj3tss"
+    }
+  ]
+}
